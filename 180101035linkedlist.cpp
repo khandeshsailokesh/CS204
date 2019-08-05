@@ -17,12 +17,12 @@ void Search(float d,node * head);
 bool Search(int a,int b,node * head);
 int length(node * head);
 
-void AddFirst(int a,int b,node ** head){
+void AddFirst(int a,int b,node * head){
 	node * new_node=(class node*) malloc(sizeof(class node));
 	new_node->x=a;
 	new_node->y=b;
-	new_node->next=*head;
-	*head=new_node;
+	new_node->next=head;
+	head=new_node;
 }
 
 node * DelFirst(node * head){
@@ -34,11 +34,11 @@ node * DelFirst(node * head){
 	return head;
 }
 
-void Del(int a,int b,node ** head){
-	node * temp=*head,*prev;
+void Del(int a,int b,node * head){
+	node * temp=head,*prev;
 	if (temp != NULL && temp->x == a && temp->y == b) 
     { 
-        *head= temp->next;   
+        head= temp->next;   
         free(temp);               
         return; 
     } 
@@ -115,13 +115,13 @@ int main()
 	switch(a[i]){
 		case 1: cin>>b[i];
 		        cin>>c[i];
-		        AddFirst(b[i],c[i],&head);
+		        AddFirst(b[i],c[i],head);
 		        break;
                 case 2: head=DelFirst(head);
                         break;
                 case 3: cin>>b[i];
 		        cin>>c[i];
-                        Del(b[i],c[i],&head);
+                        Del(b[i],c[i],head);
                         break;
                 case 4: float d;
                         cin>>d;
