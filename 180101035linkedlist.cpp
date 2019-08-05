@@ -13,7 +13,7 @@ class node
 void AddFirst(int a,int b,node ** head);
 node * DelFirst(node * head);
 void Del(int a,int b,node ** head);
-void Search(int d,node * head);
+void Search(float d,node * head);
 bool Search(int a,int b,node * head);
 int length(node * head);
 
@@ -53,7 +53,7 @@ void Del(int a,int b,node ** head){
     free(temp);  
 }
 
-void Search(int d,node * head){
+void Search(float d,node * head){
 	node * temp= (class node*) malloc(sizeof(class node));
 	temp=head;
 	if(temp->next == NULL)
@@ -67,7 +67,7 @@ void Search(int d,node * head){
 	while(temp->next != NULL){
 		if(d-(sqrt((temp->x)^2+(temp->y)^2)) >= 0)
 		{
-			cout<<temp->x<<temp->y<<endl;
+			cout<<temp->x<< temp->y<<endl;
 		}
 		temp=temp->next;
 	}
@@ -106,14 +106,34 @@ int main()
 	class node * one=NULL;
 	one = (class node*) malloc(sizeof(class node));
 	head=one;
-	int a,b,c;
-	cin>>a;
-	switch(a){
-		case 1: cin>>b;
-		        cin>>c;
-		        AddFirst(b,c,&head);
-		        break;        
+        int t;
+        cin>>t;
+        int a[t],b[t],c[t];
+        for(int i=0;i<t;i++)
+{
+        cin>>a[i];
+	switch(a[i]){
+		case 1: cin>>b[i];
+		        cin>>c[i];
+		        AddFirst(b[i],c[i],&head);
+		        break;
+                case 2: head=DelFirst(head);
+                        break;
+                case 3: cin>>b[i];
+		        cin>>c[i];
+                        Del(b[i],c[i],&head);
+                        break;
+                case 4: float d;
+                        cin>>d;
+                        Search(d,head);
+                        break;
+                case 5: cin>>b[i];
+		        cin>>c[i];
+                        cout<<Search(b[i],c[i],head);
+                        break;
+                case 6: cout<<length(head);
+                        break;                                 
 	}
-	AddFirst(5,4,&head);
-	cout<<length(head);
+}
+return 0;
 }
