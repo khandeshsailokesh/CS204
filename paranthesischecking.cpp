@@ -1,16 +1,33 @@
 #include<bits/stdc++.h> 
-using namespace std; 
+using namespace std;
+
+int noofstrline(string expr){
+    int count=0;
+    for(int i=0;i<expr.length(); i++)
+    {
+        if(expr[i]=='|')
+        count++;
+    }
+    return count;
+}
 
 // function to check if paranthesis are balanced 
 bool areParanthesisBalanced(string expr) 
 { 
 	stack<char> s; 
-	char x; 
+	char x;
+	int count=noofstrline(expr);
+	if(count%2==1)
+	return false;
+	int t=0;
 
 	// Traversing the Expression 
 	for (int i=0; i<expr.length(); i++) 
 	{ 
-		if (expr[i]=='('||expr[i]=='['||expr[i]=='{'||expr[i]=='<') 
+	    if(expr[i]=='|'){
+	        t++;
+	    }
+		if (expr[i]=='('||expr[i]=='['||expr[i]=='{'||expr[i]=='<'||(expr[i]=='|'&&t<=count/2)) 
 		{ 
 			// Push the element in the stack 
 			s.push(expr[i]); 
@@ -30,7 +47,7 @@ bool areParanthesisBalanced(string expr)
 			// Store the top element in a 
 			x = s.top(); 
 			s.pop(); 
-			if (x=='{' || x=='['||expr[i]=='|'||expr[i]=='<') 
+			if (x=='{' || x=='['||x=='|'||x=='<') 
 				return false; 
 			break; 
 
@@ -38,7 +55,7 @@ bool areParanthesisBalanced(string expr)
 // Store the top element in b 
 			x = s.top(); 
 			s.pop(); 
-			if (x=='(' || x=='['||expr[i]=='|'||expr[i]=='<') 
+			if (x=='(' || x=='['||x=='|'||x=='<') 
 				return false; 
 			break; 
 
@@ -47,17 +64,28 @@ bool areParanthesisBalanced(string expr)
 			// Store the top element in c 
 			x = s.top(); 
 			s.pop(); 
-			if (x =='(' || x == '{'||expr[i]=='|'||expr[i]=='<') 
-				return false; 
+			if (x =='(' || x == '{'||x=='|'||x=='<') 
+				return false;
+				break;
+				
 	
-		case '>': 
+	    	case '>': 
 
 			// Store the top element in b 
 			x = s.top(); 
 			s.pop(); 
-			if (x=='(' || x=='['||x == '{'||expr[i]=='|') 
+			if (x=='(' || x=='['||x == '{'||x=='|') 
 				return false; 
 			break;  
+				case '|': 
+
+			// Store the top element in b 
+			x = s.top(); 
+			s.pop(); 
+			if (x=='(' || x=='['||x == '{'||x=='<') 
+				return false; 
+			break;  
+	
 		} 
 	} 
 
@@ -84,4 +112,3 @@ int main()
 }
 	return 0; 
 } 
-
