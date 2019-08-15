@@ -106,9 +106,9 @@ int main()
 	for(int i=0;i<t;i++)
 {
 	if (areParanthesisBalanced(expr[i])) 
-		cout << "YES"; 
+		cout << "YES"<<endl; 
 	else
-		cout << "NO"; 
+		cout << "NO"<<endl; 
 }
 	return 0; 
 } 
