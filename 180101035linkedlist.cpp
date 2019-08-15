@@ -1,139 +1,167 @@
-# include <bits/stdc++.h>
+#include <bits/stdc++.h>
+
+#define ll long long
 
 using namespace std;
 
-class node 
+struct Node
 {
-    public:
-	int x;
-	int y;
-	node * next;
+    ll int x;
+    ll int y;
+    Node *next;
 };
 
-void AddFirst(int a,int b,node ** head);
-node * DelFirst(node * head);
-void Del(int a,int b,node ** head);
-void Search(float d,node * head);
-bool Search(int a,int b,node * head);
-int length(node * head);
+struct Node*head = NULL;
 
-void AddFirst(int a,int b,node * head){
-	node * new_node=(class node*) malloc(sizeof(class node));
-	new_node->x=a;
-	new_node->y=b;
-	new_node->next=head;
-	head=new_node;
-}
-
-node * DelFirst(node * head){
-	if(head==NULL)
-		return NULL;
-	node * temp=head;
-	head=head->next;
-	delete temp;
-	return head;
-}
-
-void Del(int a,int b,node * head){
-	node * temp=head,*prev;
-	if (temp != NULL && temp->x == a && temp->y == b) 
-    { 
-        head= temp->next;   
-        free(temp);               
-        return; 
-    } 
-    while (temp != NULL && (temp->x == a && temp->y == b)) 
-    { 
-        prev = temp; 
-        temp = temp->next; 
-    } 
-     if (temp == NULL) return; 
-     prev->next = temp->next; 
-  
-    free(temp);  
-}
-
-void Search(float d,node * head){
-	node * temp= (class node*) malloc(sizeof(class node));
-	temp=head;
-	if(temp->next == NULL)
-	{
-		if(d-(sqrt((temp->x)^2+(temp->y)^2)) >= 0)	
-		{
-			cout<<temp->x<<temp->y<<endl;
-		}
-	}
-	if (temp == NULL) return;
-	while(temp->next != NULL){
-		if(d-(sqrt((temp->x)^2+(temp->y)^2)) >= 0)
-		{
-			cout<<temp->x<< temp->y<<endl;
-		}
-		temp=temp->next;
-	}
-}
-
-bool Search(int a,int b,node * head){
-	 node* current = (class node*) malloc(sizeof(class node));
-	 current=head;   
-    while (current != NULL)  
-    {  
-        if (current->x == a && current->y == b)  
-            return true;  
-        current = current->next;  
-    }  
-    return false;
-}
-
-int length(node * head){
-	int count=0;
-	node * temp=(class node*) malloc(sizeof(class node));
-	temp=head;
-	if(temp == NULL)return 0;
-	if(temp->next == NULL)
-		return 1;
-	while(temp->next != NULL)
-	{
-		count++;
-		temp=temp->next;
-	}
-	return count;
-}
-
-int main()
+void AddFirst(ll int x, ll int y)
 {
-	class node * head;
-	class node * one=NULL;
-	one = (class node*) malloc(sizeof(class node));
-	head=one;
-        int t;
+struct Node *new_node=(struct Node *)malloc(sizeof(struct Node));
+new_node->x=x;
+new_node->y=y;
+new_node->next=head;
+head=new_node;
+}
+
+void DelFirst()
+{
+if(head==NULL)
+{
+cout<<"-1"<<endl;
+return;
+}
+Node*temp=head;
+head=head->next;
+free(temp);
+return ;
+}
+
+void Del(ll int x,ll int y)
+{
+	struct Node* temp=head;
+	struct Node* temp2=head;
+	struct Node* temp1=NULL;
+
+    if(temp==NULL)
+    {
+        cout<<"-1"<<endl;
+    }
+	while(temp!=NULL)
+	{
+		if(temp->x==x && temp->y==y)
+		{
+			if(temp==head)
+			{
+				head=head->next;
+				free(temp);
+			}
+		}
+	temp=temp->next;
+	}
+
+	while(temp2->next!=NULL)
+	{
+		if(temp2->next->x==x && temp2->next->y==y)
+		{
+			temp1=temp2->next;
+			temp2->next=temp2->next->next;
+			free(temp1);
+            return;
+		}
+	temp2=temp2->next;
+	}
+	cout<<"-1"<<endl;
+    return;
+}
+void Search(long double d)
+{
+   ll int count=0;
+    struct Node* temp = head;
+    while (temp!= NULL) {
+        if((temp->x)*(temp->x)+(temp->y)*(temp->y)<=d*d)
+        {
+           // cout<<"("<<(temp->x)<<","<<(temp->y)<<")";
+           count++;
+           cout<<count;
+
+        }
+        temp=temp->next;
+    }
+    if(count==0)
+    {
+        cout<<"-1"<<endl;
+    }
+
+}
+
+    string Search(ll int x,ll int y)
+ {
+    struct Node* temp = head;
+    while (temp!= NULL)
+        {
+        if((temp->x)==x&&(temp->y)==y)
+        {
+            return "True";
+        }
+        temp=temp->next;
+        }
+    return "False";
+}
+    int Length()
+{
+    struct Node* temp = head;
+    ll int count=0;
+    while (temp!= NULL) {
+        count++;
+        temp=temp->next;
+    }
+    return count;
+    }
+
+    int main()
+    {
+        ll t;
         cin>>t;
-        int a[t],b[t],c[t];
-        for(int i=0;i<t;i++)
-{
-        cin>>a[i];
-	switch(a[i]){
-		case 1: cin>>b[i];
-		        cin>>c[i];
-		        AddFirst(b[i],c[i],head);
-		        break;
-                case 2: head=DelFirst(head);
-                        break;
-                case 3: cin>>b[i];
-		        cin>>c[i];
-                        Del(b[i],c[i],head);
-                        break;
-                case 4: float d;
-                        cin>>d;
-                        Search(d,head);
-                        break;
-                case 5: cin>>b[i];
-		        cin>>c[i];
-                        cout<<Search(b[i],c[i],head);
-                        break;
-                case 6: cout<<length(head);
-                        break;                                 
-	}
-}
-return 0;
-}
+        for(ll int i=0; i<t; i++)
+        {
+            int a;
+            cin>>a;
+            switch(a)
+            {
+            case 1:
+                {
+                    ll int x,y;
+                    cin>>x>>y;
+                    AddFirst(x,y);
+                }break;
+            case 2:
+                {
+                    DelFirst();
+                }break;
+            case 3:
+                {
+                    ll int x,y;
+                    cin>>x>>y;
+                    Del(x,y);
+                }break;
+            case 4:
+                {
+                   long double d;
+                   cin>>d;
+                   Search(d);
+                   cout<<endl;
+                }break;
+            case 5:
+                {
+                    ll int x,y;
+                    cin>>x>>y;
+                    cout<<Search(x,y)<<endl;
+                }break;
+            case 6:
+                {
+                 cout<<Length()<<endl;
+                }break;
+
+            }
+        }
+        return 0;
+    }
